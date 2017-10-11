@@ -53,7 +53,25 @@ function forHorizontal(
   }
 
   const index = scene.index;
-  const inputRange = [index - 1, index, index + 1];
+  let previousIndex = index -1;
+  let nextIndex = index + 1;
+  let currentSceneIndex = scenes.findIndex((sceneItem) => sceneItem === scene)
+  let activeSceneIndex = scenes.findIndex((sceneItem) => sceneItem.isActive);
+  let isBack = activeSceneIndex < scenes.length -1;
+  if(isBack){
+      if(currentSceneIndex === activeSceneIndex){
+          nextIndex = scenes.length - 1;
+      }
+      else if(currentSceneIndex === scenes.length - 1) {
+          previousIndex = activeSceneIndex;
+      }
+      else {
+          return {
+              opacity: 0
+          };
+      }
+  }
+  const inputRange = [previousIndex, index, nextIndex];
 
   const width = layout.initWidth;
   const outputRange = I18nManager.isRTL
@@ -64,11 +82,11 @@ function forHorizontal(
   // This makes the screen's shadow to disappear smoothly.
   const opacity = position.interpolate({
     inputRange: ([
-      index - 1,
-      index - 0.99,
+      previousIndex,
+      previousIndex + 0.01,  // index - 0.99,
       index,
-      index + 0.99,
-      index + 1,
+      nextIndex - 0.01, // index + 0.99,
+      nextIndex,
     ]: Array<number>),
     outputRange: ([0, 1, 1, 0.85, 0]: Array<number>),
   });
