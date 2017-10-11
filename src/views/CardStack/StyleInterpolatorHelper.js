@@ -15,7 +15,7 @@ function getPreviousAndNextSceneIndexForScene(scene, scenes) {
         else if(currentSceneIndex === scenes.length - 1) {
             previousIndex = activeSceneIndex;
         }
-        else {
+        else if(currentSceneIndex > activeSceneIndex) {
             return [];
         }
     }
