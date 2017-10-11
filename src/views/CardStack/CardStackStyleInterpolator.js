@@ -7,6 +7,8 @@ import type {
   AnimatedViewStyleProp,
 } from '../../TypeDefinition';
 
+import StyleInterpolatorHelper from './StyleInterpolatorHelper';
+
 /**
  * Utility that builds the style for the card in the cards stack.
  *
@@ -53,24 +55,15 @@ function forHorizontal(
   }
 
   const index = scene.index;
-  let previousIndex = index -1;
-  let nextIndex = index + 1;
-  let currentSceneIndex = scenes.findIndex((sceneItem) => sceneItem === scene)
-  let activeSceneIndex = scenes.findIndex((sceneItem) => sceneItem.isActive);
-  let isBack = activeSceneIndex < scenes.length -1;
-  if(isBack){
-      if(currentSceneIndex === activeSceneIndex){
-          nextIndex = scenes.length - 1;
-      }
-      else if(currentSceneIndex === scenes.length - 1) {
-          previousIndex = activeSceneIndex;
-      }
-      else {
-          return {
-              opacity: 0
-          };
+  let previousAndNextSceneIndexs = StyleInterpolatorHelper.getPreviousAndNextSceneIndexForScene(scene, scenes);
+  if(previousAndNextSceneIndexs.length !== 2){
+      return {
+          opacity: 0
       }
   }
+  let previousIndex = previousAndNextSceneIndexs[0];
+  let nextIndex = previousAndNextSceneIndexs[1];
+
   const inputRange = [previousIndex, index, nextIndex];
 
   const width = layout.initWidth;

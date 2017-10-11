@@ -7,6 +7,8 @@ import type {
   AnimatedViewStyleProp,
 } from '../../TypeDefinition';
 
+import StyleInterpolatorHelper from './StyleInterpolatorHelper';
+
 /**
  * Utility that builds the style for the navigation header.
  *
@@ -19,8 +21,16 @@ import type {
  */
 
 function forLeft(props: NavigationSceneRendererProps): AnimatedViewStyleProp {
-  const { position, scene } = props;
+  const { position, scene, scenes } = props;
   const { index } = scene;
+  let previousAndNextSceneIndexs = StyleInterpolatorHelper.getPreviousAndNextSceneIndexForScene(scene, scenes);
+  if(previousAndNextSceneIndexs.length !== 2){
+      return {
+           opacity: 0
+    }
+  }
+  let previousIndex = previousAndNextSceneIndexs[0];
+  let nextIndex = previousAndNextSceneIndexs[1];
   return {
     opacity: position.interpolate({
       inputRange: [index - 1, index - 0.5, index, index + 0.5, index + 1],
@@ -30,8 +40,16 @@ function forLeft(props: NavigationSceneRendererProps): AnimatedViewStyleProp {
 }
 
 function forCenter(props: NavigationSceneRendererProps): AnimatedViewStyleProp {
-  const { position, scene } = props;
+  const { position, scene, scenes } = props;
   const { index } = scene;
+  let previousAndNextSceneIndexs = StyleInterpolatorHelper.getPreviousAndNextSceneIndexForScene(scene, scenes);
+  if(previousAndNextSceneIndexs.length !== 2){
+      return {
+        opacity: 0
+    }
+  }
+  let previousIndex = previousAndNextSceneIndexs[0];
+  let nextIndex = previousAndNextSceneIndexs[1];
   return {
     opacity: position.interpolate({
       inputRange: [index - 1, index, index + 1],
