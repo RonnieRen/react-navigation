@@ -163,14 +163,14 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
   _renderTitle(props: SceneProps, options: *): ?React.Element<*> {
     const style = {};
 
-    if (Platform.OS === 'android') {
-      if (!options.hasLeftComponent) {
-        style.left = 0;
-      }
-      if (!options.hasRightComponent) {
-        style.right = 0;
-      }
-    }
+    // if (Platform.OS === 'android') {
+    //   if (!options.hasLeftComponent) {
+    //     style.left = 0;
+    //   }
+    //   if (!options.hasRightComponent) {
+    //     style.right = 0;
+    //   }
+    // }
 
     return this._renderSubView(
       { ...props, style },
@@ -343,8 +343,8 @@ const styles = StyleSheet.create({
   },
   title: {
     bottom: 0,
-    left: TITLE_OFFSET,
-    right: TITLE_OFFSET,
+    left: 0,
+    right: 0,
     top: 0,
     position: 'absolute',
     alignItems: Platform.OS === 'ios' ? 'center' : 'flex-start',
