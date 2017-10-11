@@ -48,7 +48,7 @@ function forInitial(
 function forHorizontal(
   props: NavigationSceneRendererProps
 ): AnimatedViewStyleProp {
-  const { layout, position, scene } = props;
+  const { layout, position, scene, scenes } = props;
 
   if (!layout.isMeasured) {
     return forInitial(props);

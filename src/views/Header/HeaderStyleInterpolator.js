@@ -7,7 +7,7 @@ import type {
   AnimatedViewStyleProp,
 } from '../../TypeDefinition';
 
-import StyleInterpolatorHelper from './StyleInterpolatorHelper';
+import StyleInterpolatorHelper from './../CardStack/StyleInterpolatorHelper';
 
 /**
  * Utility that builds the style for the navigation header.

@@ -10,10 +10,10 @@ function getPreviousAndNextSceneIndexForScene(scene, scenes) {
     let isBack = activeSceneIndex < scenes.length -1;
     if(isBack){
         if(currentSceneIndex === activeSceneIndex){
-            nextIndex = scenes.length - 1;
+            nextIndex = scenes[scenes.length - 1].index;
         }
         else if(currentSceneIndex === scenes.length - 1) {
-            previousIndex = activeSceneIndex;
+            previousIndex = scenes[activeSceneIndex].index;
         }
         else if(currentSceneIndex > activeSceneIndex) {
             return [];
