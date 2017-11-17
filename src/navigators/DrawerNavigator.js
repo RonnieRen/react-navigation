@@ -1,7 +1,7 @@
 /* @flow */
 
 import React from 'react';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, Platform, ScrollView } from 'react-native';
 
 import createNavigator from './createNavigator';
 import createNavigationContainer from '../createNavigationContainer';
@@ -9,6 +9,7 @@ import TabRouter from '../routers/TabRouter';
 import DrawerScreen from '../views/Drawer/DrawerScreen';
 import DrawerView from '../views/Drawer/DrawerView';
 import DrawerItems from '../views/Drawer/DrawerNavigatorItems';
+import SafeAreaView from '../views/SafeAreaView';
 
 import NavigatorTypes from './NavigatorTypes';
 
@@ -23,14 +24,23 @@ export type DrawerNavigatorConfig = {
 } & NavigationTabRouterConfig &
   DrawerViewConfig;
 
+const { height, width } = Dimensions.get('window');
+
+const defaultContentComponent = (props: *) => (
+  <ScrollView alwaysBounceVertical={false}>
+    <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+      <DrawerItems {...props} />
+    </SafeAreaView>
+  </ScrollView>
+);
+
 const DefaultDrawerConfig = {
   /*
    * Default drawer width is screen width - header width
    * https://material.io/guidelines/patterns/navigation-drawer.html
    */
-  drawerWidth:
-    Dimensions.get('window').width - (Platform.OS === 'android' ? 56 : 64),
-  contentComponent: DrawerItems,
+  drawerWidth: Math.min(height, width) - (Platform.OS === 'android' ? 56 : 64),
+  contentComponent: defaultContentComponent,
   drawerPosition: 'left',
   drawerBackgroundColor: 'white',
   useNativeAnimations: true,
@@ -63,6 +73,8 @@ const DrawerNavigator = (
           routeConfigs,
           config,
           NavigatorTypes.DRAWER
+          // Flow doesn't realize DrawerScreen already has childNavigationProps
+          // from withCachedChildNavigation for some reason. $FlowFixMe
         )((props: *) => <DrawerScreen {...props} />),
       },
       DrawerOpen: {
