@@ -191,12 +191,12 @@ class Header extends React.PureComponent<Props, State> {
     const style = {};
 
     if (Platform.OS === 'android') {
-      if (!options.hasLeftComponent) {
-        style.left = 0;
-      }
-      if (!options.hasRightComponent) {
-        style.right = 0;
-      }
+      //   if (!options.hasLeftComponent) {
+      style.left = 0;
+      //   }
+      //   if (!options.hasRightComponent) {
+      style.right = 0;
+      //   }
     } else if (
       Platform.OS === 'ios' &&
       !options.hasLeftComponent &&
